@@ -1,0 +1,25 @@
+services:
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./app:/var/www/app
+        environment:
+            APP_ENV: dev
+        depends_on:
+            - db
+
+    db:
+        image: postgres:16
+        environment:
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+
+volumes:
+    pgdata:
